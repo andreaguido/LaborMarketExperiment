@@ -1,0 +1,69 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+
+{% if role == 'agent' %}
+<h3>Result of Strategy Task</h3>
+<h4>
+
+    <table style="height: 109px;" width="500">
+    <tbody>
+    <tr>
+        <td>The <b>employer</b> you are paired with offered the wage: </td>
+        <td>${{ offre_wage }}</td>
+    </tr>
+    <tr>
+        <td><b>You</b> chose the effort:</td>
+        <td>{{ steffort }}</td>
+    </tr>
+    <tr>
+        <td><b>Your payoff</b> in this round is: </td>
+        <td>${{ payoff|floatformat:"1" }}</td>
+    </tr>
+    <tr>
+        <td>The <b>employer's payoff</b> is:</td>
+        <td> ${{ payoff_other|floatformat:"1" }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br></h4><br>
+{% endif %}
+
+{% if role == 'principal' %}
+<h3>Result of Wage Offer Task</h3>
+
+<h4>
+
+        <table style="height: 109px;" width="500">
+    <tbody>
+    <tr>
+        <td><b>You</b> offered the wage: </td>
+        <td>${{ offre_wage }}</td>
+    </tr>
+    <tr>
+        <td>The <b>worker</b> you are paired with chose the effort:</td>
+        <td>{% if steffort == None %} 0 {% else %} {{ steffort }} {% endif %}</td>
+    </tr>
+    <tr>
+        <td><b>Your payoff</b> in this round is: </td>
+        <td>${{ payoff|floatformat:"1" }}</td>
+    </tr>
+    <tr>
+        <td>The <b>worker's payoff</b> is:</td>
+        <td> ${{ payoff_other|floatformat:"1" }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br></h4><br>
+{% endif %}
+
+
+
+    <br><br>
+
+</h4></p>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+{% endblock %}

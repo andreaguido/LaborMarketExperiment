@@ -1,0 +1,64 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+<h1>Basic Information and Roles</h1>
+<p> We will randomly designate you to be either an employer or a worker (these roles are described below) and then
+    randomly pair one employer with one worker. Your role never changes during the experiment and you remain with the
+    same worker/employer for the entire experiment.
+    The experiment lasts for a total of 20 decision periods.
+    No other participant will know your identity or the actions you take during this experiment.
+
+    <ul>
+        <li> <b>EMPLOYER</b>:
+                A subject assigned to the role of 'employer' will receive an endowment of $10 at the beginning of each period.
+            All employers receive the same endowment.
+            An employer will use this endowment to pay a wage to his/her worker that period.
+            Once the employer sets this wage, that employer's assigned worker views the wage and
+            then selects a corresponding level of costly effort.
+            Whatever portion of this endowment the employer keeps is then multiplied by the worker's effort and paid to the employer.
+            Thus, the higher the level of effort selected by the worker, the more money the employer earns.<br>
+
+            An employer can pay his/her worker a wage from 1 to 10 points. That is, an employer can select w=[1,2,3,...,10].
+            Once an employer selects a wage, the worker will view this wage and select a costly level of effort in response.
+            Based on the wage the employer selects and the level of costly effort the worker selects, the employer will earn:
+            <br>
+
+            <div align="center"><b>Employer's payoff = (endowment - wage)* effort level</b></div>
+
+            <br>
+
+            At the end of each period, the employer will learn the worker's effort level and his/her own payoff.
+            Note that a worker selects a new wage in each period.
+        </li><br>
+        <li>
+            <b>WORKERS</b>:
+            A subject assigned to the role of 'worker' will receive a wage offer in each period from his/her corresponding employer.
+            After viewing the employer's wage offer, the worker will select a level of costly effort for that period.
+            Workers can select effort, e, so that e = [0, 0.1, 0.2, 0.3, ..., 4].
+            Workers will know the cost of each potential effort level, the earnings of the employer, and his/her own earnings for each potential effort level.
+            After a worker selects an effort level, both the employer and the worker learn their payoffs for that period.
+            Note that the worker selects a new level of costly effort in every period.
+            Workers have the following payoff function:
+            <br>
+            <div align="center">
+                <b>Worker's payoff = wage - cost of effort</b></div>
+            <br>
+        </li>
+        <li>
+            <p>
+            A round will proceed as follows:
+    <ul>
+    <li> An employer receives an endowment and then sets a wage for the worker.</li>
+    <li> The worker learns the wage offered and then selects a level of costly effort.</li>
+    <li>Finally, employers observe the effort level and both subjects learn their payoff for that period.</li>
+    </ul>
+            </p>
+        </p>
+        </li>
+    </ul>
+</p>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+{% endblock %}
