@@ -1,0 +1,108 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+<p>
+    {% if num_round <= 0 %}
+    <table style="height: 109px;" width="900">
+    <tbody>
+    <tr>
+    <td style="width: 89.1px;"><h2>Decisional Period</h2></td>
+    <td style="width: 89.1px;"><h4><font color="#ff0000">Trial round</font></h4>
+     </td>
+    </tr>
+    </tbody>
+    </table>
+
+    {% endif %}
+
+    {% if num_round > 0 %}
+        <table style="height: 109px;" width="1100">
+        <tbody>
+        <tr>
+        <td style="width: 89.1px;"><h2>Decisional Period</h2></td>
+        <td style="width: 89.1px;"><h4>round {{ num_round }}/20</h4>
+         </td>
+        </tr>
+        </tbody>
+        </table>
+    {% endif %}
+
+    <h4>The employer has offered you the following wage: ${{ offre_wage }} <br><br>
+    <br>Please, select an effort level</h4>
+    <font color="#ff000">Note: negative payoffs are not allowed. You can proceed only if your payoff is non-negative</font>
+<br><br>
+
+
+    {% formfield group.effort %}
+    <br>
+
+    You will earn : <br>
+    Wage - Cost of Effort = ${{ offre_wage }} - 0.5 * <span id="id_effort_calcul"> </span><sup>2</sup> = </bn>$<span id="resultats"> </span><br>
+    <br>
+    The employer will earn: </br>
+    (Endowment - Wage) * Effort = (${{ group.actuale }} - ${{ offre_wage }}) * <span id="id_effort_calcul2"> </span> = $<span id="resultats2"> </span><br>
+<br>
+
+</p>
+
+<div>
+<input class="btn btn-primary btn-large"  id ="bravo" type="submit" style="visibility:hidden;" value="Next"/>
+</div>
+<p>
+    {% include Constants.instructions_template %}
+</p>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        var myVar = setInterval(function(){ myTask() }, 1000);
+
+        function round(value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
+        function myTask(){
+        effort = document.getElementById("id_effort").value
+        document.getElementById("id_effort_calcul").innerHTML = effort
+        wage = {{ offre_wage | json }}
+        document.getElementById("resultats").innerHTML = round(wage - (effort)**2/2,2)
+
+        if(document.getElementById("resultats").innerHTML >=0 ){
+            document.getElementById("bravo").style.visibility = "visible";
+        }else{document.getElementById("bravo").style.visibility = "hidden";};
+
+    }
+
+;
+    </script>
+
+    <script>
+        var myVar = setInterval(function(){ myTaskadditional() }, 1000);
+
+        function round(value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
+        function check(value) {
+        if (value < 0) {
+            return "Negative value";
+        } else {
+            return value
+        }
+        }
+
+        function myTaskadditional(){
+        effort = document.getElementById("id_effort").value
+        document.getElementById("id_effort_calcul2").innerHTML = effort
+        wage = {{ offre_wage | json }}
+        actuale = {{ group.actuale | json }}
+        net = actuale - wage
+        document.getElementById("resultats2").innerHTML = round(net*(effort),2)
+        }
+
+;
+    </script>
+{% endblock %}
