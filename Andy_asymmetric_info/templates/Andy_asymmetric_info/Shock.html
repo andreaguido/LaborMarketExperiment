@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+<p>
+<div align="center">
+<h2>Change in Employer's Endowment</h2> <br>
+<h4>     The employers' per-period endowment has changed from $12 to ${{ group.actuale }}. <br>
+    <br>This change will last for the remainder of this experiment! <br></h4>
+Please, note:
+<ul>
+    <li> The employer’s payoff is now ( ${{ group.actuale }} – Wage)* Effort.</li>
+    <li> Therefore, the <b>highest</b> wage offer possible is now ${{ group.actuale }} rather than $12.</li>
+    <li> This screen is being displayed <b>only</b> to <b>employers</b> in this experiment.</li>
+    <li> Workers <b>do not learn</b> about this change.</li>
+</ul>
+</div><br><br>
+
+Click on the button below to proceed.
+<br><br>
+</p>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+<p> <h1>Final Game Results</h1><br>
+<h4>
+<table style="height: 109px;" width="1000">
+    <tbody>
+    <tr>
+    <td>The <b>final payoff</b> that you will be paid is : </td>
+
+        <td>${{ final_payoff }}</td>
+        </tr>
+    <tr><td><br></td></tr>
+
+    <tbody>
+    <tr>
+    <td>The <b>Decisional Period</b> chosen at random:</td> <td>Period {{ random_round_payoff_1 }}</td></tr>
+    <tr>
+    <td>Your <b>payoff</b> for the <b>Decisional Period</b> chosen:</td> <td> ${{ payoff_decisional }}</td></tr>
+
+
+
+    <tr><td><br></td></tr>
+    <tr>
+    <td>The <b>Questionnaire Period</b> chosen at random:</td> <td>Period {{ random_round_payoff_2 }}</td></tr>
+
+        <tr>
+        <td>Your <b>payoff</b> for the <b>Questionnaire Period</b> chosen:</td> <td> ${{ payoff_questionnaire }}</td></tr>
+
+<tr>
+
+        <td>The <b>task</b> chosen in the Questionnaire Period is:</td>
+
+<td>
+    {% if method == 1 %}
+    1. Guess Task.</td>
+</tr>
+
+<tr>
+    <td>
+        {% if accuracy == 1 and role == 'principal'%}
+        Your beliefs were <b>accurate</b>. </td>
+        <td>You earned $5 from this task.</td>
+        {% endif %}
+        {% if accuracy == 1 and role == 'agent'%}
+        Your belief was <b>accurate</b>. </td>
+        <td>You earned $5 from this task.</td>
+        {% endif %}
+        {% if accuracy == 0 and role == 'principal'%}
+        Your beliefs were <b>not accurate</b>.</td>
+        <td>You earned $0 from this task.</td>
+        {% endif %}
+        {% if accuracy == 0 and role == 'agent'%}
+        Your belief was <b>not accurate</b>. </td>
+        <td>You earned $0 from this task.</td>
+        {% endif %}
+</tr>
+    {% endif %}
+
+
+    {% if method == 0 %}
+    {% if role == 'principal' %}
+        2. Wage Offer Task</td>
+    {% else %}
+        2. Strategy Task</td>
+    {% endif %}
+    </tr>
+    {% endif %}
+</tbody></table>
+    </h4><br>
+</p>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+{% endblock %}
