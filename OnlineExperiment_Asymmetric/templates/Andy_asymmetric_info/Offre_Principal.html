@@ -1,0 +1,62 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+{% if num_round <= 0 %}
+<table style="height: 109px;" width="900">
+<tbody>
+<tr>
+<td style="width: 89.1px;"><h2>Decisional Period</h2></td>
+<td style="width: 89.1px;"><h4><font color="#ff0000">Trial round</font></h4>
+ </td>
+</tr>
+</tbody>
+</table>
+
+{% endif %}
+
+{% if num_round > 0 %}
+<table style="height: 109px;" width="900">
+<tbody>
+<tr>
+<td style="width: 89.1px;"><h2>{% if num_round == 5 or num_round == 10 or num_round == 11 or num_round == 15 %}
+    2. Wage Offer Task
+    {% else %}
+    Decisional Period
+    {% endif %}</h2></td>
+<td style="width: 89.1px;"><h4>{% if num_round != 5 and num_round != 10 and num_round != 11 and num_round != 15 %}
+    round {{ num_round }}/20
+    {% endif %}</h4>
+ </td>
+</tr>
+</tbody>
+</table>
+{% endif %}
+
+
+<h4>
+    You have to make a wage offer to the worker. <br><br>
+    Please, select a wage level to send
+    between ${{ min_wage }} and ${{group.actuale}}.
+    <br>
+    {% if num_round > 10 and shock_revealed == 0 %}
+    If you decide to offer a wage larger than $12, we will tell the worker that your endowment has permanently
+        increase to $16.
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    {% formfield group.wage %}
+</h4>
+
+<br>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+
+{% if num_round != 5 and num_round != 10 and num_round != 11 and num_round != 15 %}
+<p>
+    {% include Constants.instructions_template %}
+</p>
+{% endif %}
+{% endblock %}
