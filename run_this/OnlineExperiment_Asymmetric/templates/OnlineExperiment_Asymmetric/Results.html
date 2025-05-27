@@ -1,0 +1,85 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content %}
+
+{% if num_round <= 0 %}
+
+<table style="height: 109px;" width="900">
+    <tbody>
+    <tr>
+    <td style="width: 89.1px;"><h2>Results</h2></td>
+    <td style="width: 89.1px;"><h4><font color="#ff0000">Trial round</font></h4>
+     </td>
+    </tr>
+    </tbody>
+    </table>
+
+{% endif %}
+
+{% if num_round > 0 %}
+<table style="height: 109px;" width="900">
+    <tbody>
+    <tr>
+    <td style="width: 89.1px;"><h2>Results</h2></td>
+    <td style="width: 89.1px;"><h4>round {{ num_round }}</h4>
+     </td>
+    </tr>
+    </tbody>
+    </table>
+ {% endif %}
+
+
+{% if role == 'agent' %}
+<h4>
+        <table style="height: 109px;" width="600">
+    <tbody>
+    <tr>
+        <td>The <b>employer</b> you are paired with offered the wage: </td>
+        <td>{{ offre_wage }}</td>
+    </tr>
+    <tr>
+        <td><b>You</b> chose the effort:</td>
+        <td>{% if effort == None %} 0 {% else %} {{ effort }} {% endif %}</td>
+
+    </tr>
+    <tr>
+        <td><b>Your payoff</b> in this round is: </td>
+        <td>${{ payoff|floatformat:"2" }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br></h4><br>
+{% endif %}
+
+{% if role == 'principal' %}
+<h4>
+        <table style="height: 109px;" width="600">
+    <tbody>
+    <tr>
+        <td><b>You</b> offered the wage: </td>
+        <td>{{ offre_wage }}</td>
+    </tr>
+    <tr>
+        <td>The <b>worker</b> you are paired with chose the effort:</td>
+        <td>{% if effort == None %} 0 {% else %} {{ effort }} {% endif %}</td>
+
+    </tr>
+    <tr>
+        <td><b>Your payoff</b> in this round is: </td>
+        <td>${{ payoff|floatformat:"2" }}</td>
+    </tr>
+    <tr>
+        <td>The <b>worker's payoff</b> is:</td>
+        <td> ${{ payoff_other|floatformat:"2" }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <br></h4><br>
+{% endif %}
+
+</p>
+<div>
+    <button class="btn btn-primary btn-large">Next</button>
+</div>
+{% endblock %}

@@ -21,7 +21,8 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 23               #3 trials + 20 of the real game
     Endowment = 12
-    instructions_template = 'Andy_asymmetric_info/Summary.html'
+    instructions_template = 'OnlineExperiment_Asymmetric/Summary.html'
+    instructions_template = 'OnlineExperiment_Asymmetric/Summary.html'
     Endowmenthigh= 16             #endowment after positive shock
     Endowmentlow=8                #endowment after negative shock
     round_specials = [8,13,14,18] #these are the rounds with belief elicitation

@@ -1,0 +1,257 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block app_styles %}
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 2px;
+    text-align: center;
+}
+tr { line-height: 19px; }
+
+table#t01 {
+    width: 100%;
+    background-color: #f1f1c2;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+        <h2>2. Strategy Task:</h2>
+<br><br>
+You will use the table below to provide your effort choice for each possible wage the employer could send you
+in this round.
+Note that in this task you will not known in advance the offered wage (as in previous Decisional Periods).
+
+That is:
+
+<ul>
+    <li>
+The employer will make a wage offer as usual, but this time it will not
+        be displayed until the end of this task. You will learn the wage offer only after completing this task.
+    </li>
+    <li>You have to complete the table below with your effort response for each hypothetical wage level</li>
+</ul>
+
+<br><br>
+<h3>How you earn money for the Effort Provision Task</h3>
+<ul>
+    <li>To compute your payoff for this task, the effort level corresponding to the wage offered by the employer will
+        be chosen as effort response.</li>
+</ul>
+<br>
+<h3>Example</h3>
+
+<ul>
+
+
+    <li>suppose you have completed the table below.</li>
+    <li> Now, suppose that the employer offers a wage of $6 and that you agreed previously to provide effort 1.5 for a wage offer of $6 (that is the line 6 of table).</li>
+    <li>Your payoff is computed as usual : Wage - Cost of Effort = ($6 - 0.5 * 1.5 <sup>2</sup> ) = $4.9 in this example.</li>
+</ul>
+<br>
+</p>
+
+{% if num_round == 13 %}
+Your effort choices in the previous Strategy Task: <br><br>
+
+
+<table class="tg" width="800", align="center">
+  <tr>
+    <th class="tg-us36">Wages</th>
+    <th class="tg-us36">1</th>
+    <th class="tg-us36">2</th>
+    <th class="tg-us36">3</th>
+    <th class="tg-us36">4</th>
+    <th class="tg-us36">5</th>
+    <th class="tg-us36">6</th>
+    <th class="tg-us36">7</th>
+    <th class="tg-us36">8</th>
+    <th class="tg-us36">9</th>
+    <th class="tg-us36">10</th>
+    <th class="tg-us36">11</th>
+    <th class="tg-us36">12</th>
+  </tr>
+  <tr>
+    <td class="tg-us36">Effort</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_1 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_2 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_3 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_4 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_5 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_6 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_7 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_8 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_9 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_10 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_11 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_8_12 }}</td>
+  </tr>
+</table>
+
+<br><br>
+{% endif %}
+<hr class ="line"><line></line>
+<div align="center">-------------------------
+Please, indicate your effort choices in the table below by moving the sliders.------------------<br>
+        <font color="#ff000">Note: negative payoffs are not allowed. You can proceed only if your payoff is non-negative</font>
+
+</div>
+<table style="..." border = "1" id = "t01">
+    <colgroup>
+       <col span="1" style="width: 15%;">
+       <col span="1" style="width: 50%;">
+       <col span="1" style="width: 15%;">
+    </colgroup>
+<tbody>
+<tr>
+<th style="width: 181px; text-align: center;"><b>Hypothetical Wages</b></th>
+<th style="width: 181px; text-align: center;"><b>Your Effort</b></th>
+<th style="..."><b>Your payoff</b></th>
+</tr>
+<tr>
+<td style="width: 181px;">1</td>
+<td style="width: 181px;">{% formfield player.steffort1 %} </td>
+<td style="..."><span id="resultats1"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">2</td>
+<td style="width: 181px;">{% formfield player.steffort2 %}</td>
+<td style="..."><span id="resultats2"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">3</td>
+<td style="width: 181px;">{% formfield player.steffort3 %}</td>
+<td style="..."><span id="resultats3"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">4</td>
+<td style="width: 181px;">{% formfield player.steffort4 %}</td>
+<td style="..."><span id="resultats4"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">5</td>
+<td style="width: 181px;">{% formfield player.steffort5 %}</td>
+<td style="..."><span id="resultats5"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">6</td>
+<td style="width: 181px;">{% formfield player.steffort6 %}</td>
+<td style="..."><span id="resultats6"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">7</td>
+<td style="width: 181px;">{% formfield player.steffort7 %}</td>
+<td style="..."><span id="resultats7"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">8</td>
+<td style="width: 181px;">{% formfield player.steffort8 %}</td>
+<td style="..."><span id="resultats8"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">9</td>
+<td style="width: 181px;">{% formfield player.steffort9 %}</td>
+<td style="..."><span id="resultats9"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">10</td>
+<td style="width: 181px;">{% formfield player.steffort10 %}</td>
+<td style="..."><span id="resultats10"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">11</td>
+<td style="width: 181px;">{% formfield player.steffort11 %}</td>
+<td style="..."><span id="resultats11"> </span></td>
+</tr>
+<tr>
+<td style="width: 181px;">12</td>
+<td style="width: 181px;">{% formfield player.steffort12 %}</td>
+<td style="..."><span id="resultats12"> </span></td>
+</tr>
+</tbody>
+</table>
+<p>
+<div>
+    <button class="btn btn-primary btn-large" id="bouton" style="visibility:hidden;">Next</button>
+    <span id="bravo" style="color:red"> </span>
+</div>
+</p>
+
+
+<p>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var myVar = setInterval(function(){ myTask() }, 1000);
+
+        function round(value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        }
+
+        function myTask(){
+        effort1 = document.getElementById("id_steffort1").value
+        effort2 = document.getElementById("id_steffort2").value
+        effort3 = document.getElementById("id_steffort3").value
+        effort4 = document.getElementById("id_steffort4").value
+        effort5 = document.getElementById("id_steffort5").value
+        effort6 = document.getElementById("id_steffort6").value
+        effort7 = document.getElementById("id_steffort7").value
+        effort8 = document.getElementById("id_steffort8").value
+        effort9 = document.getElementById("id_steffort9").value
+        effort10 = document.getElementById("id_steffort10").value
+        effort11 = document.getElementById("id_steffort11").value
+        effort12 = document.getElementById("id_steffort12").value
+        document.getElementById("resultats1").innerHTML = round(1 - (effort1)**2/2,1)
+        document.getElementById("resultats2").innerHTML = round(2 - (effort2)**2/2,1)
+        document.getElementById("resultats3").innerHTML = round(3 - (effort3)**2/2,1)
+        document.getElementById("resultats4").innerHTML = round(4 - (effort4)**2/2,1)
+        document.getElementById("resultats5").innerHTML = round(5 - (effort5)**2/2,1)
+        document.getElementById("resultats6").innerHTML = round(6 - (effort6)**2/2,1)
+        document.getElementById("resultats7").innerHTML = round(7 - (effort7)**2/2,1)
+        document.getElementById("resultats8").innerHTML = round(8 - (effort8)**2/2,1)
+        document.getElementById("resultats9").innerHTML = round(9 - (effort9)**2/2,1)
+        document.getElementById("resultats10").innerHTML = round(10 - (effort10)**2/2,1)
+        document.getElementById("resultats11").innerHTML = round(11 - (effort11)**2/2,1)
+        document.getElementById("resultats12").innerHTML = round(12 - (effort12)**2/2,1)
+        }
+;
+    </script>
+
+    <script>
+  var myVar2 = setInterval(function(){ myTask2() }, 1000);
+
+  function myTask2(){
+          ciaoeffort1 = document.getElementById("resultats1").innerHTML;
+          ciaoeffort2 = document.getElementById("resultats2").innerHTML;
+          ciaoeffort3 = document.getElementById("resultats3").innerHTML;
+          ciaoeffort4 = document.getElementById("resultats4").innerHTML;
+          ciaoeffort5 = document.getElementById("resultats5").innerHTML;
+          ciaoeffort6 = document.getElementById("resultats6").innerHTML;
+          ciaoeffort7 = document.getElementById("resultats7").innerHTML;
+          ciaoeffort8 = document.getElementById("resultats8").innerHTML;
+          ciaoeffort9 = document.getElementById("resultats9").innerHTML;
+          ciaoeffort10 = document.getElementById("resultats10").innerHTML;
+          ciaoeffort11 = document.getElementById("resultats11").innerHTML;
+          ciaoeffort12 = document.getElementById("resultats12").innerHTML;
+
+          if (ciaoeffort1 >= 0 &&ciaoeffort2 >= 0 &&ciaoeffort3 >= 0 &&ciaoeffort4 >= 0 &&ciaoeffort5 >= 0 &&ciaoeffort6 >= 0 &&ciaoeffort7 >= 0 &&ciaoeffort8 >= 0 &&ciaoeffort9 >= 0 &&ciaoeffort10 >= 0 &&ciaoeffort11 >= 0 && ciaoeffort12 >=0){
+                document.getElementById("bouton").style.visibility = "visible";document.getElementById("bravo").innerHTML = "";
+
+             }else{document.getElementById("bravo").innerHTML = "Negative payoff not allowed. You cannot proceed";
+             document.getElementById("bouton").style.visibility = "hidden";}
+
+        }
+;
+</script>
+
+
+{% endblock %}
