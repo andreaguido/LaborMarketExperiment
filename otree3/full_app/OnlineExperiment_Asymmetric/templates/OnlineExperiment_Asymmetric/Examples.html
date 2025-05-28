@@ -1,0 +1,146 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+<h1>Comprehension Questions</h1><p>
+All numbers in these examples are picked randomly and are for illustrative purposes only. They are not meant to suggest
+in any way how you should make your guesses in the actual experiment.
+    </p>
+
+<br>
+<br>
+<ul>
+    <li>
+        <b>Example 1: The employer offers a wage of 3 and the worker chooses an effort level of 1.</b>
+
+            <div class="form-group required">
+    <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+        <tr>
+            <td>Cost of Effort: </td>
+            <td><input type="number" step = "0.1" id="myNumber_0" value="0" style="width: 4em;"></td>
+            <td><p id="check_0"></p></td>
+        </tr>
+        <tr>
+            <td>Employer's Payoff: </td>
+            <td><input type="number" step = "0.1" id="myNumber_1" value="0" style="width: 4em;"></td>
+            <td><p id="check_1"></p></td>
+        </tr>
+        <tr>
+            <td>Worker's Payoff: </td>
+            <td><input type="number" step = "0.1" id="myNumber_2" value="0" style="width: 4em;"></td>
+            <td><p id="check_2"></p></td>
+        </tr>
+
+    </table>
+
+
+    <li>
+        <b>Example 2: An employer offers a wage of 8 and the worker chooses an effort level of 2.</b>
+        <br><br>
+
+        <div class="form-group required">
+    <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+        <tr>
+            <td>Cost of Effort: </td>
+            <td><input type="number" id="myNumber_3" value="0" style="width: 4em;"></td>
+            <td><p id="check_3"></p></td>
+        </tr>
+        <tr>
+            <td>Employer's Payoff :</td>
+            <td><input type="number" id="myNumber_4" value="0" style="width: 4em;"></td>
+            <td><p id="check_4"></p></td>
+        </tr>
+        <tr>
+            <td>Worker's Payoff :</td>
+            <td><input type="number" id="myNumber_5" value="0" style="width: 4em;"></td>
+            <td><p id="check_5"></p></td>
+        </tr>
+</table>
+
+
+    <li>
+        <b>Example 3: An employer offers a wage of 5 and the worker chooses an effort level of 3.</b>
+        <br><br>
+
+                    <div class="form-group required">
+    <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+        <tr>
+            <td>Cost of Effort: </td>
+            <td><input type="number" step = "0.1" id="myNumber_6" value="0" style="width: 4em;"></td>
+            <td><p id="check_6"></p></td>
+        </tr>
+        <tr>
+            <td>Employer's Payoff: </td>
+            <td><input type="number" step = "0.1" id="myNumber_7" value="0" style="width: 4em;"></td>
+            <td><p id="check_7"></p></td>
+        </tr>
+        <tr>
+            <td>Worker's Payoff: </td>
+            <td><input type="number" step = "0.1" id="myNumber_8" value="0" style="width: 4em;"></td>
+            <td><p id="check_8"></p></td>
+        </tr>
+    </table>
+</ul>
+
+</p>
+
+        <div>Nombre de bonnes réponses: <span id="nb_bonne_reponse"></span></div>
+<p id="bravo"></p>
+<div>
+    <button class="btn btn-primary btn-large" id="bouton" style="visibility:hidden;">Next</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        //Prevent the implicit submission:
+        var pref = "myNumber_";
+        //iterate over the input
+        for(var j = 0; boo = document.getElementById( pref + j ) ; j++){
+            boo.addEventListener('keypress', function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                }
+            });
+        };
+        //Every second, ask to check the player's input
+        var myVar = setInterval(function(){ myTask() }, 1000);
+        var liste_bonne_rep = [1,7,2.5,2,4,6,4.5,15,.5]
+        function myTask(){
+        //iterate over the player's answer and update if good or not
+        var pref_2 = "myNumber_";
+        var pref_3 = "check_";
+        for(var i = 0; boo = document.getElementById(pref_2 + i); i++){
+            boo_2 = document.getElementById(pref_3 + i);
+            answer = boo.value;
+            if(answer == liste_bonne_rep[i]){
+                boo_2.innerHTML = "Right Answer";
+                boo_2.style.color = "green";
+                }
+            else if (answer == 0) {
+                boo_2.innerHTML = "";
+                }
+            else {
+                boo_2.innerHTML = "Wrong Answer";
+                boo_2.style.color = "red";
+                }
+            }
+        ;
+        //update number of good answer
+        var nb_b_rep = 0;
+        var prefix = 'check_';
+        for(var i = 0; el = document.getElementById(prefix + i); i++) {
+            if(el.innerHTML == "Right Answer") {
+                nb_b_rep += 1;
+                }
+            }
+        ;
+        //allow player to move if he has all the good answer
+        document.getElementById("nb_bonne_reponse").innerHTML = nb_b_rep;
+        if(nb_b_rep == 9){
+        document.getElementById("bouton").style.visibility = "visible";
+        document.getElementById("bravo").innerHTML = "Vous avez trouvé toutes les bonnes réponses, vous pouvez passer à l'étape suivante."}
+        }
+    </script>
+{% endblock %}

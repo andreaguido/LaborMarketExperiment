@@ -1,0 +1,109 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+<h1>Comprehension Quiz</h1><p>
+ </p>
+Please, respond to the following questions concerning the instructions that you just read.
+<br>
+<br>
+<ul>
+    <li>
+        <b>Question 1. : </b>
+
+            <div class="form-group required">
+    <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+        <tr>
+            <td>How many <b>period types</b> are there?</td>
+            <td><input type="number" id="myNumber_0" value="0" style="width: 4em;"></td>
+            <td><p id="check_0"></p></td>
+        </tr>
+
+    </table>
+
+    <li>
+        <b>Question 2. : </b>
+
+            <div class="form-group required">
+    <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+        <tr>
+            <td>How many <i>Decisional Periods</i> will be paid?</td>
+            <td><input type="number" id="myNumber_1" value="0" style="width: 4em;"></td>
+            <td><p id="check_1"></p></td>
+        </tr>
+        <tr>
+            <td>How many <i>Questionnaire Periods</i> will be paid?</td>
+            <td><input type="number" id="myNumber_2" value="0" style="width: 4em;"></td>
+            <td><p id="check_2"></p></td>
+        </tr>
+        <tr>
+            <td>How many periods will be paid overall?</td>
+            <td><input type="number" id="myNumber_3" value="0" style="width: 4em;"></td>
+            <td><p id="check_3"></p></td>
+        </tr>
+
+    </table>
+
+
+</p>
+
+        <div>Number of right answers: <span id="nb_bonne_reponse"></span></div>
+<p id="bravo"></p>
+<div>
+    <button class="btn btn-primary btn-large" id="bouton" style="visibility:hidden;">Next</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        //Prevent the implicit submission:
+        var pref = "myNumber_";
+        //iterate over the input
+        for(var j = 0; boo = document.getElementById( pref + j ) ; j++){
+            boo.addEventListener('keypress', function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                }
+            });
+        };
+        //Every second, ask to check the player's input
+        var myVar = setInterval(function(){ myTask() }, 1000);
+        var liste_bonne_rep = [2,1,1,2]
+        function myTask(){
+        //iterate over the player's answer and update if good or not
+        var pref_2 = "myNumber_";
+        var pref_3 = "check_";
+        for(var i = 0; boo = document.getElementById(pref_2 + i); i++){
+            boo_2 = document.getElementById(pref_3 + i);
+            answer = boo.value;
+            if(answer == liste_bonne_rep[i]){
+                boo_2.innerHTML = "Right Answer";
+                boo_2.style.color = "green";
+                }
+            else if (answer == 0) {
+                boo_2.innerHTML = "";
+                }
+            else {
+                boo_2.innerHTML = "Wrong Answer";
+                boo_2.style.color = "red";
+                }
+            }
+        ;
+        //update number of good answer
+        var nb_b_rep = 0;
+        var prefix = 'check_';
+        for(var i = 0; el = document.getElementById(prefix + i); i++) {
+            if(el.innerHTML == "Right Answer") {
+                nb_b_rep += 1;
+                }
+            }
+        ;
+        //allow player to move if he has all the good answer
+        document.getElementById("nb_bonne_reponse").innerHTML = nb_b_rep;
+        if(nb_b_rep == 4){
+        document.getElementById("bouton").style.visibility = "visible";
+        document.getElementById("bravo").innerHTML = "You replied correctly to all the questions. Now, you may proceed to the next page by clicking the button below."}
+        }
+    </script>
+{% endblock %}
