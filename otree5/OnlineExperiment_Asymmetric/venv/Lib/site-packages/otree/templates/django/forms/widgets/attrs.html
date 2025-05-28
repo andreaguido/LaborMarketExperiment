@@ -1,0 +1,12 @@
+{% load l10n %}{% localize off %}
+    {# need to use |default so it fails silently #}
+    {% with widget.type|default:"" as wtype %}
+    {% for name, value in widget.attrs.items %}
+        {{ name }}{% if wtype != "checkbox" and wtype != "radio" and name == "class" %}="form-control
+            {{ value }}"
+            {% else %}{% if value is not True %}="{{ value }}"{% endif %}
+        {% endif %}{% endfor %}
+    {% if wtype != "checkbox" and wtype != "radio" and "class" not in widget.attrs %} class="form-control"{% endif %}
+    {% endwith %}
+
+{% endlocalize %}
