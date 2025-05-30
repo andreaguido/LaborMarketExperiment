@@ -1,0 +1,71 @@
+{% extends "otree/admin/Session.html" %}
+{% load otree %}
+
+{% block content %}
+  {{ block.super }}
+  <table id="monitor-table"
+         class="table table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+      {% for header in column_names %}
+        <th>{{ header }}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <p><span id="num_participants_visited">0</span>/{{ session.num_participants }} participants started.</p>
+  <br/>
+  {% if not session.use_browser_bots %}
+    <button id="advance_users" class="btn btn-primary" type="button"
+            data-toggle="popover" data-trigger="hover"
+            data-content="Advance the slowest user(s) by one page, by forcing a timeout on their current page.">
+      Advance slowest user(s)
+    </button>
+  {% endif %}
+
+
+  <br>
+  <div id="refresh_server_error" class="alert alert-danger"
+       style="display: none;">
+    Failed to refresh data from the server.
+  </div>
+
+  <div id="auto_advance_server_error" class="alert alert-danger"
+       style="display: none;">
+    An error occurred and participants could not be advanced.
+    See the server logs for details.
+  </div>
+
+  {% csrf_token %}
+
+{% endblock %}
+
+
+{% block internal_scripts %}
+  {{ block.super }}
+  <script>
+      var $table, $tbody;
+      let visitedParticipants;
+      var monitorSocket;
+      var advanceUrl = '{% url 'AdvanceSession' session.code %}';
+      var socketUrl = {{ socket_url|json }};
+  </script>
+
+  <script src="{% static 'otree/js/monitor.js' %}"></script>
+
+  <script>
+      $(document).ready(function () {
+          visitedParticipants = [];
+          $table = $('#monitor-table');
+          $tbody = $table.find('tbody');
+          initWebSocket(socketUrl, $tbody, visitedParticipants);
+          setup_ajax_advance(advanceUrl);
+          makeTableDraggable($table);
+
+          $('[data-toggle="popover"]').popover();
+      });
+
+  </script>
+{% endblock %}
