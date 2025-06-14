@@ -1,0 +1,109 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+<div align="center"><h2><u>1. Description of a <em>Decision Period</em></u></h2></div>
+
+<p><strong><u>Steps</u></strong></p>
+<p>Each <em>Decision Period</em> proceeds as follows:</p>
+<ol>
+<li>The employer receives an endowment and then sets a wage for the worker</li>
+<li>The worker learns the wage offered and then selects a level of effort in response</li>
+<li>Both subjects learn their payoff for that period</li>
+<li>The game proceeds to either another <em>Decision Period</em> or to a <em>Questionnaire Period</em></li>
+</ol>
+<p><strong><u>Roles and Actions</u></strong></p>
+<p><strong>Employer:</strong></p>
+<ul>
+<li>A subject assigned to the role of &lsquo;employer' initially receives an endowment of $12. The employer will use the per-period endowment to pay a wage to the worker for that period.</li>
+</ul>
+<ul>
+<li>The wage must be some number between 1 and the total endowment in increments of $1. Thus, an employer could pay a wage of $1,$2,$3, &hellip;, etcetera.</li>
+</ul>
+<ul>
+<li>Whatever portion of the endowment the employer keeps is multiplied by the effort provided by the worker and then paid to the employer.</li>
+</ul>
+<ul>
+<li>Formally, the employer will earn:</li>
+</ul>
+<p style="text-align: center;"><strong><em>Employer's payoff&nbsp; =&nbsp; (Endowment - Wage)*Effort</em></strong></p>
+<p>&nbsp;</p>
+<ul>
+<li><strong>An Example: </strong>Suppose that the employer decides to pay the worker a wage of $4. Further, suppose that the worker selects effort of 1.5.&nbsp; With these hypothetical values, the employer earns ($12 - $4)*1.5 =$8 *1.5 = $12.</li>
+</ul>
+<ul>
+<li>Note that only what is left of the initial endowment is multiplied by the level of effort chosen by the worker. Thus, paying the whole endowment as a wage would yield a payoff of zero for the employer no matter the level of effort the worker selects in response.</li>
+</ul>
+<ul>
+<li>At the end of each period, the employer will learn both the worker's effort level and his/her own payoff.</li>
+</ul>
+<ul>
+<li>The employer<strong> cannot accumulate</strong> money throughout periods. This means the employer can use only his/her endowment to set a wage in each period.</li>
+</ul>
+<p>&nbsp;<strong>Worker:</strong></p>
+<ul>
+<li>A subject assigned to the role of 'worker' will receive a wage offer in each period from the employer.</li>
+</ul>
+<ul>
+<li>In each period, after receiving the employer's wage offer, the worker will select a level of costly effort for that period.. The higher the effort, the higher is the cost of effort.</li>
+</ul>
+<ul>
+<li>The level of effort can be: &nbsp;[0,0.25,0.5, &hellip; 1, 1.25, 1.50,..., max effort]. Note that a worker cannot select a level of effort that will cause a negative payoff.</li>
+</ul>
+<ul>
+<li>Workers have the following payoff function:</li>
+</ul>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Worker's payoff = Wage - Cost of Effort</em></strong></p>
+<p>&nbsp;</p>
+<p>The cost of effort is computed according to the following function and displayed before confirming the effort choice:</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong><em>Cost of effort =.5*e<sup>2</sup></em></strong></p>
+<p><strong><em><br /> <br /> </em></strong></p>
+<ul>
+<li>Suppose an employer offers a wage of $6 and the worker exerts an effort level of 2 in response. Then the worker earns <span style="font-weight: 400;">$6 - $(0.5*</span><span style="font-weight: 400;">2<sup>2</sup></span><span style="font-weight: 400;">)= $6 -$2=$4</span>.</li>
+</ul>
+<ul>
+<li>At the end of each period, the worker will learn his/her own payoff.</li>
+</ul>
+<ul>
+<li>The worker <strong>cannot accumulate </strong>money throughout periods. That is, each period the worker will receive a wage offer and go through the steps described above.</li>
+</ul>
+
+    <div align="center"><h2><u>2. Description of a <em>Questionnaire Period</em></u></h2></div>
+
+<p><strong><u>Steps</u></strong></p>
+<p>Each <em>Questionnaire Period</em> proceeds as follows:</p>
+<p>&nbsp;</p>
+<ol>
+<li>Both the worker and the employer respond to some questions</li>
+<li>Both the worker and the employer make their Decisions</li>
+<li>Payoffs of the worker and the employer for that period are displayed</li>
+<li>The game proceeds to either another <em>Questionnaire Period</em> or to a <em>Decision Period</em>.</li>
+</ol>
+<p>&nbsp;</p>
+<p>Further details on points 1 and 2 will be given during the game and displayed on screens. Instructions are role specific. We display these instructions during each questionnaire period. However, the instructions for a questionnaire period are the same for all questionnaire periods.</p>
+<p>&nbsp;</p>
+<p>&nbsp;The software will notify you when you are playing a <em>Questionnaire Period</em>. You will start the game by playing a <em>Decision&nbsp; </em></p>
+<p>&nbsp;</p>
+
+    <h2><u>3. Summary of Basic Instructions</u></h2><strong></strong>
+</ol></div>
+<ul>
+
+<li>We will randomly assign you to one of two roles: employer or worker. Your role will not change during the experiment.</li>
+<li>We randomly assign one worker to one employer. This is the employer-worker pair. These pairs do not change during the experiment.</li>
+<li>The game lasts for 20 periods (plus 3 trial periods) and they are distinguished into <em>Decision&nbsp;&nbsp; Periods</em> and <em>Questionnaire Periods.</em></li>
+<li>In Each Decision&nbsp; &nbsp;period, the employer receives an endowment and uses this endowment to pay a wage to the worker.</li>
+<li>Once the worker receives a wage offer, the worker will respond by selecting a level of costly effort.</li>
+<li>Employer earnings for each period are <strong><em>(Endowment - </em></strong><strong><em>Wage)*Effort</em></strong>.</li>
+<li>Worker earnings for each period are <strong><em>(</em></strong><strong><em>Wage - Cost of Effort)</em></strong>.</li>
+<li>The employer receives a new endowment in each period and the employer and the worker cannot accumulate money across periods.</li>
+<li>The employer selects a new wage each Decision &nbsp;period. The workers selects a new level of costly effort each Decision&nbsp;&nbsp; period.</li>
+<li>During Questionnaire Periods both players have to respond to some questions displayed on screens. They both will be notified when a Questionnaire Period is played.</li>
+<li>1 <em>Decision&nbsp; Period</em> and 1 <em>Questionnaire Period</em> will be randomly chosen and the payoffs in such periods, plus your showup fee, form you final payment.</li>
+
+</ul>
+
+{% endblock %}

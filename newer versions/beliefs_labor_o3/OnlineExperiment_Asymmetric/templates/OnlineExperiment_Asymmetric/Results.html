@@ -3,6 +3,11 @@
 
 {% block content %}
 
+{% if dropped_group == 1 %}
+    You have been dropped from this study
+
+{% else %}
+
 {% if num_round <= 0 %}
 
 <table style="height: 109px;" width="900">
@@ -82,4 +87,7 @@
 <div>
     <button class="btn btn-primary btn-large">Next</button>
 </div>
+
+{% endif %}
+
 {% endblock %}

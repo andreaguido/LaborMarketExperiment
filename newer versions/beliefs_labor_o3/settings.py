@@ -14,7 +14,8 @@ SESSION_CONFIGS = [
              treatment=1,
              online= 1,
              matching= "P",
-             minimum_wage= 0
+             minimum_wage= 0,
+             prolific_link= "Copy paste here the prolific link"
     ),
 ]
 
@@ -27,13 +28,15 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
+PARTICIPANT_FIELDS = []
+
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 ROOMS = []
 

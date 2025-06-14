@@ -53,9 +53,33 @@ Please, respond to the following questions concerning the instructions that you 
 <div>
     <button class="btn btn-primary btn-large" id="bouton" style="visibility:hidden;">Next</button>
 </div>
+
+<input type="button" style="align-items: center" value="Click here to re-read instructions" onclick="toggleText()">
+                <br><br>
+<div id="Myid" style="display: none;">
+    <div class="card">
+        <div class="card-header" align="center">
+            Instructions
+        </div>
+        <div class="card-body">
+                {% include 'OnlineExperiment_Asymmetric/online_instructions_1_tab.html' %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
+    <script>
+        function toggleText(){
+          var x = document.getElementById("Myid");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+    </script>
     <script>
         //Prevent the implicit submission:
         var pref = "myNumber_";

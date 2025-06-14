@@ -1,10 +1,15 @@
 from otree.api import Currency as c, currency_range
+
+from settings import PARTICIPANT_FIELDS
 from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 import math
 
 
+class consent_page(Page):
+    def is_displayed(self):
+        return self.round_number==1
 
 class quiz_1(Page):
     timeout_seconds=60
@@ -247,6 +252,9 @@ class workerTasks(Page):
         return{
             'num_round' : self.subsession.round_number,
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
 
 
 class strategyinstructions(Page):
@@ -277,6 +285,9 @@ class strategymethod(Page):
             'pre_eleffort_8_12': self.player.in_round(8).steffort12
 
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
 
 class strategymethodPOSITIVE(Page):
     timeout_seconds = 60
@@ -316,6 +327,9 @@ class strategymethodPOSITIVE(Page):
             'pre_eleffort_14_15' : self.player.in_round(14).steffort15,
             'pre_eleffort_14_16' : self.player.in_round(14).steffort16
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
 
 class strategymethodPOSITIVE_first_time(Page):
     timeout_seconds = 60
@@ -378,6 +392,9 @@ class beliefworker(Page):
             return Constants.Endowment
         else:
             return self.group.actuale
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
 
 class Offre_Principal(Page):
     timeout_seconds = 60
@@ -399,6 +416,11 @@ class Offre_Principal(Page):
 
     def wage_min(self):
             return self.subsession.min_wage
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class Choix_Agent_Firing(Page):
     timeout_seconds = 60
@@ -428,6 +450,10 @@ class Choix_Agent(Page):
             'num_round':self.subsession.round_number-3,
             'shock_page':self.group.shock_page
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
+            self.player.missed_decisions+=1
 
 
 class WaitPage_check_wage_higher_than_12(WaitPage):
@@ -444,6 +470,7 @@ class WaitPage_compute(WaitPage):
         self.group.get_variables()
         self.group.calculate_payoff()
         self.group.check_payoff()
+        self.group.check_missed_decisions()
 
 class WaitPage_1(WaitPage):
     def after_all_players_arrive(self):
@@ -459,8 +486,8 @@ class WaitPage_2(WaitPage):
         self.group.calculate_payoff_final_2()
         self.group.rounding()
 
+
 class Results(Page):
-    timeout_seconds = 60
     def vars_for_template(self):
         return {
             'offre_wage': self.group.wage,
@@ -469,6 +496,7 @@ class Results(Page):
             'payoff_other': self.player.get_others_in_group()[0].payoff,
             'num_round': self.subsession.round_number - 3,
             'role': self.player.type,
+            'dropped_group': self.group.dropped_group
 
         }
     def is_displayed(self):
@@ -497,7 +525,9 @@ class online_instructions_1(Page):
     timeout_seconds = 60
     def is_displayed(self):
         return  self.round_number == 1 and self.subsession.online == 1
-    pass
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_instruction_1=1
 
 class instructions_2(Page):
     def is_displayed(self):
@@ -508,6 +538,9 @@ class online_instructions_2(Page):
     timeout_seconds = 60
     def is_displayed(self):
         return  self.round_number == 1 and self.subsession.online == 1
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_instruction_2=1
     pass
 
 class ResultsStrategy(Page):
@@ -543,19 +576,28 @@ class FinalPayoff(Page):
         }
     def is_displayed(self):
         return self.round_number==Constants.num_rounds
+
 class finalquestionnaire(Page):
     timeout_seconds = 60
     form_model = models.Player
     form_fields = ['gender', 'undergrad', 'comments', 'asymmetry_check']
     def vars_for_template(self):
         return {
-            'role': self.player.type
+            'role': self.player.type,
         }
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
+class prolific(Page):
+    def vars_for_template(self):
+        return {
+            'link': self.subsession.prolific_link
+        }
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 page_sequence = [
+    consent_page,
     instructions_1, #General Information
     online_instructions_1, #General Information
     Waitforinstructions,
@@ -600,4 +642,5 @@ page_sequence = [
     pace_maker,
     FinalPayoff,
     finalquestionnaire,
+    prolific
 ]

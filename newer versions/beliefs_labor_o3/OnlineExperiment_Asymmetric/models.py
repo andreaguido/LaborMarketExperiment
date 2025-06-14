@@ -22,11 +22,11 @@ class Constants(BaseConstants):
     num_rounds = 23               #3 trials + 20 of the real game
     Endowment = 12
     instructions_template = 'OnlineExperiment_Asymmetric/Summary.html'
-    instructions_template = 'OnlineExperiment_Asymmetric/Summary.html'
     Endowmenthigh= 16             #endowment after positive shock
     Endowmentlow=8                #endowment after negative shock
     round_specials = [8,13,14,18] #these are the rounds with belief elicitation
     bonus_if_in_internal = 5      #this is the belief payment
+    max_missed_decisions = 3
 
 class Subsession(BaseSubsession):
 
@@ -34,11 +34,13 @@ class Subsession(BaseSubsession):
     min_wage = models.IntegerField()  # 0 for firing treatment, 1 for baseline
     matching = models.CharField()
     online = models.IntegerField()
+    prolific_link = models.CharField()
     def creating_session(self):
         self.draw = self.session.config['treatment']
         self.online = self.session.config['online']
         self.matching = self.session.config['matching']
         self.min_wage = self.session.config['minimum_wage']
+        self.prolific_link = self.session.config['prolific_link']
         print("********This is DRAW the treatment********", self.draw)
         if self.matching == 'P':
             for g in self.get_groups():
@@ -77,6 +79,7 @@ class Group(BaseGroup):
 ##### VARIABLES FOR ASY-POS SHOCK
     shock_revealed = models.IntegerField(initial=0)                                                                      # flag : if 1 employer has offered wage > 12 after the shock
     shock_page = models.IntegerField(initial=0)                                                                 # flag to show the shock page to the shock page
+    dropped_group = models.IntegerField(initial=0)
 
 
     def get_variables(self): #function to get effort stated in the strategy method
@@ -328,7 +331,10 @@ class Group(BaseGroup):
         for p in players:
             if p.payoff < 0:
                 p.payoff=0
-
+    def check_missed_decisions(self):
+        for p in self.get_players():
+            if p.missed_decisions > Constants.max_missed_decisions:
+                self.dropped_group = 1
 
 class Player(BasePlayer):
     type = models.CharField()
@@ -393,3 +399,10 @@ class Player(BasePlayer):
         verbose_name = 'Please, write here any comment concerning the experiment (for example: game length, instructions, game). We would love to hear your opinion about it.'
 
     )
+    # timeout
+    timeout_instruction_1 = models.IntegerField(initial=0)
+    timeout_instruction_2 = models.IntegerField(initial=0)
+    timeout_decision = models.IntegerField(initial=0)
+
+    # missed decisions
+    missed_decisions = models.IntegerField(initial=0)
