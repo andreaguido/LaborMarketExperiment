@@ -46,17 +46,17 @@ class Subsession(BaseSubsession):
             for g in self.get_groups():
                 for p in g.get_players():
                     p.type = ['principal', 'agent'][p.id_in_group - 1]
-            if self.round_number == 1:
-                self.group_randomly(fixed_id_in_group=True)
-                print("this is the group matrix for round 1", self.get_group_matrix())
-            elif self.round_number < 4:
-                self.group_like_round(1)
-            elif self.round_number == 4:
-                self.group_randomly(fixed_id_in_group=True)
-                self.group_like_round(4)
-            else:
-                self.group_like_round(4)
-                print("this is the group matrix for round 4", self.get_group_matrix())
+            #if self.round_number == 1:
+            #    self.group_randomly(fixed_id_in_group=True)
+            #    print("this is the group matrix for round 1", self.get_group_matrix())
+            #elif self.round_number < 4:
+            #    self.group_like_round(1)
+            #elif self.round_number == 4:
+            #    self.group_randomly(fixed_id_in_group=True)
+            #    self.group_like_round(4)
+            #else:
+            #    self.group_like_round(4)
+            #    print("this is the group matrix for round 4", self.get_group_matrix())
         elif self.matching == 'S':
             for g in self.get_groups():
                 for p in g.get_players():
@@ -377,7 +377,7 @@ class Player(BasePlayer):
     steffort16 = models.FloatField(min=0, max=6, widget=widgets.SliderInput(attrs={'step': '0.25'}), verbose_name="")
 
     #WORKER: elicited wage
-    wagebelief = models.IntegerField(min=1, verbose_name='')
+    wagebelief = models.IntegerField(min=0, verbose_name='')
     #payoff from questionnaire period chosen randomly
     payoff_questionnaire = models.FloatField(initial=0)
     #payoff from decisional period chosen randomly
@@ -390,7 +390,10 @@ class Player(BasePlayer):
     undergrad = models.IntegerField(choices=[[1,'Yes'], [0,'No']],verbose_name='')
     #treatment check
     asymmetry_check = models.IntegerField(choices=[[1, 'ONLY EMPLOYERS in this experiment'], [0, 'BOTH EMPLOYERS and WORKERS in this experiment']],
-                                          verbose_name="The change in employers' endowment (from $12 to $8) was announced to",
+                                          verbose_name="The change in employers' endowment (from $12) was announced to",
+                                          blank=True)
+    shock_check = models.IntegerField(choices=[[0, 'No, it did not change'], [1, 'Yes, it increased'], [2, 'Yes, it decreased']],
+                                          verbose_name="Over the course of the experiment, did you think that the endowment of the employer you were paired with had changed?",
                                           blank=True)
     #comments
     comments = models.TextField(
@@ -403,6 +406,8 @@ class Player(BasePlayer):
     timeout_instruction_1 = models.IntegerField(initial=0)
     timeout_instruction_2 = models.IntegerField(initial=0)
     timeout_decision = models.IntegerField(initial=0)
+    timeout_quiz_1= models.IntegerField(initial=0)
+    timeout_quiz_2= models.IntegerField(initial=0)
 
     # missed decisions
     missed_decisions = models.IntegerField(initial=0)

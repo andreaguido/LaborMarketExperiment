@@ -59,7 +59,8 @@ The employer will make a wage offer as usual, but this time it will not
 <br>
 </p>
 
-{% if num_round == 13 %}
+{% if num_round > 12 %}
+
 Your effort choices in the previous Strategy Task: <br><br>
 
 
@@ -81,6 +82,7 @@ Your effort choices in the previous Strategy Task: <br><br>
   </tr>
   <tr>
     <td class="tg-us36">Effort</td>
+    {% if num_round == 13 %}
     <td class="tg-us36">    {{ pre_eleffort_8_1 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_2 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_3 }}</td>
@@ -93,6 +95,38 @@ Your effort choices in the previous Strategy Task: <br><br>
     <td class="tg-us36">    {{ pre_eleffort_8_10 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_11 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_12 }}</td>
+
+            {% elif num_round == 14 %}
+
+    <td class="tg-us36">    {{ pre_eleffort_13_1 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_2 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_3 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_4 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_5 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_6 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_7 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_8 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_9 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_10 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_11 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_12 }}</td>
+
+      {% elif num_round == 18 %}
+
+      <td class="tg-us36">    {{ pre_eleffort_14_1 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_2 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_3 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_4 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_5 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_6 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_7 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_8 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_9 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_10 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_11 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_12 }}</td>
+
+    {% endif %}
   </tr>
 </table>
 

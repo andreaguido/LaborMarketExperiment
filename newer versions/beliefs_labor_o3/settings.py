@@ -15,7 +15,8 @@ SESSION_CONFIGS = [
              online= 1,
              matching= "P",
              minimum_wage= 0,
-             prolific_link= "Copy paste here the prolific link"
+             prolific_link= "https://app.prolific.com/submissions/complete?cc=C11UBNXT",
+             doc="NEGATIVE shock, set treatment = 0, POSITIVE shock set treatment to 1; if you run it online, set online to 1. Online will change instruction display and other related things (e.g., dropouts)."
     ),
 ]
 
@@ -38,7 +39,16 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = False
 
-ROOMS = []
+ROOMS = [
+dict(
+        name='bel_n',
+        display_name='Belief Experiment - Negative Shock'
+    ),
+dict(
+        name='bel_p',
+        display_name='Belief Experiment - Positive Shock'
+    ),
+]
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

@@ -39,7 +39,7 @@
     Please, select a wage level to send
     between ${{ min_wage }} and ${{group.actuale}}.
     <br>
-    {% if num_round > 10 and shock_revealed == 0 %}
+    {% if num_round > 10 and shock_revealed == 0 and positive == 1 %}
     If you decide to offer a wage larger than $12, we will tell the worker that your endowment has permanently
         increase to $16.
     {% endif %}
@@ -63,7 +63,7 @@
             Instructions
         </div>
         <div class="card-body">
-            {% include Constants.instructions_template %}
+            {% include 'OnlineExperiment_Asymmetric/online_instructions_2_tab.html' %}
             {% if num_round != 5 and num_round != 10 and num_round != 11 and num_round != 15 %}
             {% endif %}
         </div>

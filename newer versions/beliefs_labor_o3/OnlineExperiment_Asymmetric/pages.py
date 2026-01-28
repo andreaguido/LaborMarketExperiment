@@ -12,23 +12,28 @@ class consent_page(Page):
         return self.round_number==1
 
 class quiz_1(Page):
-    timeout_seconds=60
     def is_displayed(self):
         return self.round_number==1 and self.subsession.online == 0
 
 class online_quiz_1(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return self.round_number==1 and self.subsession.online == 1
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_quiz_1=1
 
 class quiz_2(Page):
     def is_displayed(self):
         return self.round_number==1 and self.subsession.online == 0
 
 class online_quiz_2(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return self.round_number==1 and self.subsession.online == 1
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_quiz_2=1
 
 class assign_WORKER(Page):
     timeout_seconds = 60
@@ -41,12 +46,17 @@ class assign_EMPLOYER(Page):
         return self.round_number == 1 and self.player.type =="principal"
 
 class Shock(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return self.round_number==14 and self.player.type =="principal"
+    def vars_for_template(self):
+        return {
+            'positive': self.session.config['treatment']
+        }
+
 
 class Shock_Agent(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     form_model = models.Group
     form_fields = ['steffort']
     def is_displayed(self):
@@ -72,7 +82,7 @@ class Gamestart_Employer(Page):
         return self.round_number==4 and self.player.type =="principal"
 
 class employerTasks(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal'
     def vars_for_template(self):
@@ -99,7 +109,7 @@ class transition_to_strategy(Page):
         }
 
 class beliefelicitation_instructions(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal'
     def vars_for_template(self):
@@ -108,7 +118,7 @@ class beliefelicitation_instructions(Page):
         }
 
 class beliefelicitation(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal' and self.group.shock_revealed == 0
     form_model= models.Player
@@ -127,12 +137,41 @@ class beliefelicitation(Page):
             'pre_eleffort_8_9': self.player.in_round(8).eleffort9,
             'pre_eleffort_8_10': self.player.in_round(8).eleffort10,
             'pre_eleffort_8_11': self.player.in_round(8).eleffort11,
-            'pre_eleffort_8_12': self.player.in_round(8).eleffort12
+            'pre_eleffort_8_12': self.player.in_round(8).eleffort12,
+            'pre_eleffort_13_1': self.player.in_round(13).eleffort1,
+            'pre_eleffort_13_2': self.player.in_round(13).eleffort2,
+            'pre_eleffort_13_3': self.player.in_round(13).eleffort3,
+            'pre_eleffort_13_4': self.player.in_round(13).eleffort4,
+            'pre_eleffort_13_5': self.player.in_round(13).eleffort5,
+            'pre_eleffort_13_6': self.player.in_round(13).eleffort6,
+            'pre_eleffort_13_7': self.player.in_round(13).eleffort7,
+            'pre_eleffort_13_8': self.player.in_round(13).eleffort8,
+            'pre_eleffort_13_9': self.player.in_round(13).eleffort9,
+            'pre_eleffort_13_10': self.player.in_round(13).eleffort10,
+            'pre_eleffort_13_11': self.player.in_round(13).eleffort11,
+            'pre_eleffort_13_12': self.player.in_round(13).eleffort12,
+            'pre_eleffort_14_1': self.player.in_round(14).eleffort1,
+            'pre_eleffort_14_2': self.player.in_round(14).eleffort2,
+            'pre_eleffort_14_3': self.player.in_round(14).eleffort3,
+            'pre_eleffort_14_4': self.player.in_round(14).eleffort4,
+            'pre_eleffort_14_5': self.player.in_round(14).eleffort5,
+            'pre_eleffort_14_6': self.player.in_round(14).eleffort6,
+            'pre_eleffort_14_7': self.player.in_round(14).eleffort7,
+            'pre_eleffort_14_8': self.player.in_round(14).eleffort8,
+            'pre_eleffort_14_9': self.player.in_round(14).eleffort9,
+            'pre_eleffort_14_10': self.player.in_round(14).eleffort10,
+            'pre_eleffort_14_11': self.player.in_round(14).eleffort11,
+            'pre_eleffort_14_12': self.player.in_round(14).eleffort12,
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 
 class beliefelicitationPOSITIVE(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal' and self.subsession.draw ==1 and self.group.shock_revealed == 1 and self.group.shock_page == 0
     form_model= models.Player
@@ -170,9 +209,14 @@ class beliefelicitationPOSITIVE(Page):
             'pre_eleffort_14_15': self.player.in_round(14).eleffort15,
             'pre_eleffort_14_16': self.player.in_round(14).eleffort16
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class beliefelicitationPOSITIVE_first_time(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal' and self.subsession.draw ==1 and self.group.shock_revealed == 1 and self.group.shock_page == 1
     form_model= models.Player
@@ -212,7 +256,7 @@ class beliefelicitationPOSITIVE_first_time(Page):
         }
 
 class beliefelicitationNEGATIVE(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 14 or self.round_number == 18) and self.player.type == 'principal' and self.subsession.draw ==0
     form_model= models.Player
@@ -243,9 +287,14 @@ class beliefelicitationNEGATIVE(Page):
             'pre_eleffort_14_8': self.player.in_round(14).eleffort8,
 
         }
+    def before_next_page(self):
+        if self.timeout_happened:
+            self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class workerTasks(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'agent'
     def vars_for_template(self):
@@ -258,12 +307,12 @@ class workerTasks(Page):
 
 
 class strategyinstructions(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'agent'
 
 class strategymethod(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 8 or self.round_number == 13 or self.round_number == 14 or self.round_number == 18) and self.player.type == 'agent' and self.group.shock_revealed == 0
     form_model= models.Player
@@ -282,15 +331,41 @@ class strategymethod(Page):
             'pre_eleffort_8_9': self.player.in_round(8).steffort9,
             'pre_eleffort_8_10': self.player.in_round(8).steffort10,
             'pre_eleffort_8_11': self.player.in_round(8).steffort11,
-            'pre_eleffort_8_12': self.player.in_round(8).steffort12
+            'pre_eleffort_8_12': self.player.in_round(8).steffort12,
+            'pre_eleffort_13_1': self.player.in_round(13).steffort1,
+            'pre_eleffort_13_2': self.player.in_round(13).steffort2,
+            'pre_eleffort_13_3': self.player.in_round(13).steffort3,
+            'pre_eleffort_13_4': self.player.in_round(13).steffort4,
+            'pre_eleffort_13_5': self.player.in_round(13).steffort5,
+            'pre_eleffort_13_6': self.player.in_round(13).steffort6,
+            'pre_eleffort_13_7': self.player.in_round(13).steffort7,
+            'pre_eleffort_13_8': self.player.in_round(13).steffort8,
+            'pre_eleffort_13_9': self.player.in_round(13).steffort9,
+            'pre_eleffort_13_10': self.player.in_round(13).steffort10,
+            'pre_eleffort_13_11': self.player.in_round(13).steffort11,
+            'pre_eleffort_13_12': self.player.in_round(13).steffort12,
+            'pre_eleffort_14_1': self.player.in_round(14).steffort1,
+            'pre_eleffort_14_2': self.player.in_round(14).steffort2,
+            'pre_eleffort_14_3': self.player.in_round(14).steffort3,
+            'pre_eleffort_14_4': self.player.in_round(14).steffort4,
+            'pre_eleffort_14_5': self.player.in_round(14).steffort5,
+            'pre_eleffort_14_6': self.player.in_round(14).steffort6,
+            'pre_eleffort_14_7': self.player.in_round(14).steffort7,
+            'pre_eleffort_14_8': self.player.in_round(14).steffort8,
+            'pre_eleffort_14_9': self.player.in_round(14).steffort9,
+            'pre_eleffort_14_10': self.player.in_round(14).steffort10,
+            'pre_eleffort_14_11': self.player.in_round(14).steffort11,
+            'pre_eleffort_14_12': self.player.in_round(14).steffort12,
 
         }
     def before_next_page(self):
         if self.timeout_happened:
             self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class strategymethodPOSITIVE(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 14 or self.round_number == 18) and self.player.type == 'agent' and (self.group.shock_revealed == 1) and self.group.shock_page == 0
     form_model= models.Player
@@ -330,9 +405,11 @@ class strategymethodPOSITIVE(Page):
     def before_next_page(self):
         if self.timeout_happened:
             self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class strategymethodPOSITIVE_first_time(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     def is_displayed(self):
         return (self.round_number == 14 or self.round_number == 18) and self.player.type == 'agent' and self.group.shock_revealed == 1 and self.group.shock_page == 1
     form_model= models.Player
@@ -371,7 +448,7 @@ class strategymethodPOSITIVE_first_time(Page):
         }
 
 class beliefworker(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*3
     form_model = models.Player
     form_fields = ['wagebelief']
     def is_displayed(self):
@@ -395,9 +472,11 @@ class beliefworker(Page):
     def before_next_page(self):
         if self.timeout_happened:
             self.player.timeout_decision=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 class Offre_Principal(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*1
     form_model = models.Group
     form_fields = ['wage']
 
@@ -405,7 +484,8 @@ class Offre_Principal(Page):
         return {
             'num_round': self.subsession.round_number - 3,
             'min_wage': self.subsession.min_wage,
-            'shock_revealed': self.group.shock_revealed
+            'shock_revealed': self.group.shock_revealed,
+            'positive': self.session.config['treatment']
         }
 
     def is_displayed(self):
@@ -433,7 +513,7 @@ class Choix_Agent_Firing(Page):
         }
 
 class Choix_Agent(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*1
     form_model = models.Group
     form_fields = ['effort']
 
@@ -453,7 +533,8 @@ class Choix_Agent(Page):
     def before_next_page(self):
         if self.timeout_happened:
             self.player.timeout_decision=1
-            self.player.missed_decisions+=1
+            for p in self.player.in_rounds(self.round_number, Constants.num_rounds):
+                p.missed_decisions+=1
 
 
 class WaitPage_check_wage_higher_than_12(WaitPage):
@@ -488,6 +569,7 @@ class WaitPage_2(WaitPage):
 
 
 class Results(Page):
+    timeout_seconds = 60
     def vars_for_template(self):
         return {
             'offre_wage': self.group.wage,
@@ -522,7 +604,7 @@ class instructions_1(Page):
     pass
 
 class online_instructions_1(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return  self.round_number == 1 and self.subsession.online == 1
     def before_next_page(self):
@@ -535,7 +617,7 @@ class instructions_2(Page):
     pass
 
 class online_instructions_2(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60*5
     def is_displayed(self):
         return  self.round_number == 1 and self.subsession.online == 1
     def before_next_page(self):
@@ -580,7 +662,7 @@ class FinalPayoff(Page):
 class finalquestionnaire(Page):
     timeout_seconds = 60
     form_model = models.Player
-    form_fields = ['gender', 'undergrad', 'comments', 'asymmetry_check']
+    form_fields = ['gender', 'undergrad', 'comments', 'asymmetry_check', 'shock_check']
     def vars_for_template(self):
         return {
             'role': self.player.type,
@@ -595,6 +677,12 @@ class prolific(Page):
         }
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
+
+
+class dropped_participant(Page):
+    def is_displayed(self):
+        return self.group.dropped_group ==1 & self.subsession.online == 1
+
 
 page_sequence = [
     consent_page,
@@ -621,7 +709,7 @@ page_sequence = [
     beliefelicitation_instructions,
     beliefelicitation,
     beliefelicitationPOSITIVE,
-    beliefelicitationNEGATIVE,
+    #beliefelicitationNEGATIVE,
     strategyinstructions,
     beliefworker,
     transition_to_strategy,
@@ -635,6 +723,7 @@ page_sequence = [
     WaitPage_1,
     Choix_Agent,
     WaitPage_compute,
+    dropped_participant,
     WaitPage_2,
     Results,
     ResultsStrategy,

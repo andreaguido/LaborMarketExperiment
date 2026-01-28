@@ -32,10 +32,9 @@ remind yourself of how to complete the Guess Task and/or how
 you are paid for completing the Guess Task.
 <br><br><br>
 
-{% if num_round == 13 %}
+{% if num_round > 12 %}
+
 Your guesses in the previous Guess Task: <br><br>
-
-
 <table class="tg" width="800", align="center">
   <tr>
     <th class="tg-us36">Wages</th>
@@ -52,8 +51,11 @@ Your guesses in the previous Guess Task: <br><br>
     <th class="tg-us36">11</th>
     <th class="tg-us36">12</th>
   </tr>
+
   <tr>
     <td class="tg-us36">Guess on Effort</td>
+
+    {% if num_round == 13 %}
     <td class="tg-us36">    {{ pre_eleffort_8_1 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_2 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_3 }}</td>
@@ -66,11 +68,43 @@ Your guesses in the previous Guess Task: <br><br>
     <td class="tg-us36">    {{ pre_eleffort_8_10 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_11 }}</td>
     <td class="tg-us36">    {{ pre_eleffort_8_12 }}</td>
+
+      {% elif num_round == 14 %}
+
+    <td class="tg-us36">    {{ pre_eleffort_13_1 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_2 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_3 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_4 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_5 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_6 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_7 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_8 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_9 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_10 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_11 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_13_12 }}</td>
+
+      {% elif num_round == 18 %}
+
+      <td class="tg-us36">    {{ pre_eleffort_14_1 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_2 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_3 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_4 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_5 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_6 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_7 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_8 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_9 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_10 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_11 }}</td>
+    <td class="tg-us36">    {{ pre_eleffort_14_12 }}</td>
+
   </tr>
 </table>
 
 <br><br>
 
+    {% endif %}
 {% endif %}
 
 
